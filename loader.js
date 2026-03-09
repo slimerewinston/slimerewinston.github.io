@@ -1,0 +1,1 @@
+javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://YOUR_GITHUB_USERNAME.github.io/fcwatch-overhaul-mobile.js';s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your connection.');};document.head.appendChild(s);})();
