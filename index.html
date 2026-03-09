@@ -141,7 +141,7 @@
                 Go to <code>fc-watch.com</code>, open your bookmarks, and tap <strong>FCWatch Overhaul</strong>.
             </li>
         </ul>
-        <a class="drag-btn" href="${loaderCode}">
+        <a class="drag-btn" href="javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://slimerewinston.github.io/fcwatch-overhaul-mobile.js';s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your connection.');};document.head.appendChild(s);})();">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l7 7 7-7"/></svg>
             FCWatch Overhaul
         </a>
@@ -184,7 +184,7 @@
         document.getElementById('copyBtn').addEventListener('click', function() {
             // iOS 18 Safari strips the first "javascript:" when pasting into a bookmark URL field.
             // By adding it twice, Safari strips the first one, but the second one remains, fixing the bug!
-            const rawCode = "${loaderCode.replace(/"/g, '\\"')}";
+            const rawCode = "javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://slimerewinston.github.io/fcwatch-overhaul-mobile.js';s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your connection.');};document.head.appendChild(s);})();";
             const safeCode = "javascript:" + rawCode;
             navigator.clipboard.writeText(safeCode).then(() => {
                 const btn = this;
