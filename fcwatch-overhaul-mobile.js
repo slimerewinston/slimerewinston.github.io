@@ -1,5 +1,5 @@
 // FCWatch Overhaul v6 - Ultimate iOS Bookmarklet Port
-// Compiled: 2026-03-10T14:12:08.956Z
+// Compiled: 2026-03-10T14:25:21.443Z
 
 
 // === IOS_SHIM.JS ===
@@ -20,6 +20,15 @@
     window.chrome.runtime = window.chrome.runtime || {};
     window.chrome.storage = window.chrome.storage || {};
     window.chrome.storage.local = window.chrome.storage.local || {};
+
+    // 0. Mock Killswitch State
+    // Since killswitch.js is not bundled for mobile, we must mock its global state 
+    // to instantly resolve the initialization locks in modernizer/dark_ui/etc.
+    window.__FCW_EXTENSION_STATE = {
+        enabled: true,
+        loaded: true,
+        ready: Promise.resolve(true)
+    };
 
     // 1. Storage Polyfill (using localStorage)
     const STORAGE_PREFIX = 'fcw_ext_';
@@ -136,6 +145,20 @@
 
     if (document.getElementById('fcw-mobile-responsive-css')) return;
 
+    // 1. Zoom Out Viewport
+    // The default site might not have a viewport or it's set to initial-scale=1.0 which feels too big.
+    // We force a zoomed-out perspective by overriding the meta tag.
+    try {
+        let metaViewport = document.querySelector('meta[name="viewport"]');
+        if (!metaViewport) {
+            metaViewport = document.createElement('meta');
+            metaViewport.name = "viewport";
+            document.head.appendChild(metaViewport);
+        }
+        // width=device-width, initial-scale=0.85 makes everything render slightly smaller/zoomed out, fitting more content!
+        metaViewport.content = "width=device-width, initial-scale=0.85, maximum-scale=3.0, user-scalable=yes";
+    } catch (e) { }
+
     const style = document.createElement('style');
     style.id = 'fcw-mobile-responsive-css';
     style.textContent = `
@@ -212,6 +235,14 @@
             .modal-dialog {
                 margin: 10px auto !important;
                 width: 95% !important;
+            }
+            
+            /* Fix massive Navbar Logo */
+            img[src*="logonav.png"], .navbar-brand img, .navbar-header img {
+                max-width: 55px !important;
+                height: auto !important;
+                padding: 0 !important;
+                margin: 0 !important;
             }
             
             /* Forms and inputs */
