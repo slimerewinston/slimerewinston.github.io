@@ -29,6 +29,9 @@
             font-size: 15px;
             line-height: 1.5;
             margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .version {
@@ -43,24 +46,28 @@
             margin-bottom: 20px;
         }
 
-        .btn {
+        .bookmarklet-link {
             display: inline-block;
             background: linear-gradient(135deg, #FF2079, #8d124d);
-            color: white;
-            text-decoration: none;
+            color: white !important;
+            text-decoration: none !important;
             padding: 16px 32px;
             font-size: 18px;
             font-weight: 700;
             border-radius: 30px;
-            cursor: move;
             margin-top: 25px;
             box-shadow: 0 8px 20px rgba(255, 32, 121, 0.4);
             transition: transform 0.2s;
             outline: none;
+            -webkit-touch-callout: default;
         }
 
-        .btn:hover {
+        .bookmarklet-link:hover {
             transform: scale(1.05);
+        }
+
+        .bookmarklet-link:active {
+            transform: scale(0.97);
         }
 
         .steps {
@@ -93,7 +100,7 @@
         .steps li {
             margin-bottom: 14px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .steps li:last-child {
@@ -103,26 +110,50 @@
         strong {
             color: #fff;
         }
+
+        .note {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            margin-top: 15px;
+            font-style: italic;
+        }
     </style>
 </head>
 
 <body>
     <h1>FCWatch Overhaul</h1>
-    <div class="version">Ultimate iOS Edition</div>
-    <p>Install the mobile plugin via Safari Bookmarklet. This new V2 engine injects the latest updates directly from
-        GitHub Pages and persists automatically across site navigations.</p>
+    <div class="version">Mobile v6</div>
+    <p>Drag the button below to your Bookmarks / Favorites to install. Tap it on any FC Watch page to activate the
+        overhaul.</p>
 
-    <a href="javascript:(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s);})();"
-        class="btn" title="Drag to Bookmarks Bar">FCWatch (Drag Me!)</a>
+    <a class="bookmarklet-link"
+        href="javascript:(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s);})();">FCWatch
+        Mobile v6</a>
 
     <div class="steps">
-        <h2>🛠 How to Install</h2>
+        <h2>📱 iOS Installation</h2>
         <ol>
-            <li>Make sure your browser's <strong>Bookmarks Bar</strong> is visible (Ctrl+Shift+B / Cmd+Shift+B).</li>
-            <li><strong>Click and drag</strong> the "FCWatch (Drag Me!)" button above into your Bookmarks Bar.</li>
-            <li>Visit any FC Watch page, click the new bookmark, and launch the overhaul!</li>
+            <li><strong>Long press</strong> the "FCWatch Mobile v6" button above with one finger and keep holding it.
+            </li>
+            <li>While still holding, use <strong>another finger</strong> to tap the <strong>Bookmarks icon</strong> (📖)
+                at the bottom of Safari.</li>
+            <li>Drag the link into your <strong>Favorites</strong> folder and release.</li>
+            <li>Go to any <strong>FC Watch</strong> page, tap the Bookmarks icon, and tap <strong>"FCWatch Mobile
+                    v6"</strong> to activate!</li>
         </ol>
     </div>
+
+    <div class="steps" style="margin-top: 20px;">
+        <h2>💻 Desktop Installation</h2>
+        <ol>
+            <li>Show your <strong>Bookmarks Bar</strong> (Ctrl+Shift+B / Cmd+Shift+B).</li>
+            <li><strong>Drag</strong> the "FCWatch Mobile v6" button above into your Bookmarks Bar.</li>
+            <li>Visit any FC Watch page and click the bookmark to activate!</li>
+        </ol>
+    </div>
+
+    <p class="note">The bookmarklet needs to be activated each time you visit FC Watch. The persist module will keep it
+        alive as you navigate between pages.</p>
 </body>
 
 </html>
