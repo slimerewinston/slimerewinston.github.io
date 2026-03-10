@@ -1,5 +1,5 @@
 // FCWatch Overhaul v6 - Ultimate iOS Bookmarklet Port
-// Compiled: 2026-03-10T14:25:21.443Z
+// Compiled: 2026-03-10T20:51:23.998Z
 
 
 // === IOS_SHIM.JS ===
@@ -20,15 +20,6 @@
     window.chrome.runtime = window.chrome.runtime || {};
     window.chrome.storage = window.chrome.storage || {};
     window.chrome.storage.local = window.chrome.storage.local || {};
-
-    // 0. Mock Killswitch State
-    // Since killswitch.js is not bundled for mobile, we must mock its global state 
-    // to instantly resolve the initialization locks in modernizer/dark_ui/etc.
-    window.__FCW_EXTENSION_STATE = {
-        enabled: true,
-        loaded: true,
-        ready: Promise.resolve(true)
-    };
 
     // 1. Storage Polyfill (using localStorage)
     const STORAGE_PREFIX = 'fcw_ext_';
@@ -133,36 +124,31 @@
 
 
 // === MOBILE_CSS.JS ===
-// === FCWatch Overhaul — Global Mobile Responsiveness ===
+// === FCWatch Overhaul — Global Mobile Responsiveness (V2) ===
 // Injects CSS rules to force Bootstrap grids, tables, and containers to fit on mobile screens.
+// V2: Fixes oversized logo, card grid collapse, and viewport zoom level.
 
 (function initMobileCSS() {
     'use strict';
 
-    // Check if we are on a mobile device or a small screen
     const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     if (!isMobile && window.innerWidth > 768) return;
 
     if (document.getElementById('fcw-mobile-responsive-css')) return;
 
-    // 1. Zoom Out Viewport
-    // The default site might not have a viewport or it's set to initial-scale=1.0 which feels too big.
-    // We force a zoomed-out perspective by overriding the meta tag.
-    try {
-        let metaViewport = document.querySelector('meta[name="viewport"]');
-        if (!metaViewport) {
-            metaViewport = document.createElement('meta');
-            metaViewport.name = "viewport";
-            document.head.appendChild(metaViewport);
-        }
-        // width=device-width, initial-scale=0.85 makes everything render slightly smaller/zoomed out, fitting more content!
-        metaViewport.content = "width=device-width, initial-scale=0.85, maximum-scale=3.0, user-scalable=yes";
-    } catch (e) { }
+    // 1. Fix viewport meta tag to zoom out properly
+    let viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) {
+        viewport = document.createElement('meta');
+        viewport.name = 'viewport';
+        document.head.appendChild(viewport);
+    }
+    viewport.content = 'width=device-width, initial-scale=0.85, maximum-scale=5.0, user-scalable=yes';
 
     const style = document.createElement('style');
     style.id = 'fcw-mobile-responsive-css';
     style.textContent = `
-        /* --- GLOBAL IOS RESPONSIVENESS --- */
+        /* --- GLOBAL IOS RESPONSIVENESS (V2) --- */
         @media (max-width: 768px) {
             /* Fix horizontal scrolling */
             html, body { 
@@ -176,8 +162,8 @@
             .container, .container-fluid { 
                 width: 100% !important; 
                 max-width: 100% !important; 
-                padding-left: 10px !important; 
-                padding-right: 10px !important; 
+                padding-left: 8px !important; 
+                padding-right: 8px !important; 
                 box-sizing: border-box !important; 
             }
             
@@ -190,87 +176,120 @@
             }
             table { 
                 width: 100% !important; 
-                font-size: 0.85rem !important; 
+                font-size: 0.8rem !important; 
             }
             th, td { 
-                padding: 10px 6px !important; 
+                padding: 8px 5px !important; 
                 word-wrap: break-word;
             }
             
-            /* Force Bootstrap columns to wrap/stack vertically on mobile */
+            /* Bootstrap rows */
             .row { 
                 margin-left: -5px !important; 
                 margin-right: -5px !important; 
                 display: flex !important;
                 flex-wrap: wrap !important;
             }
-            [class*="col-"] { 
-                padding-left: 5px !important; 
-                padding-right: 5px !important; 
-                width: 100% !important; 
-                flex: 0 0 100% !important;
-                max-width: 100% !important;
-                display: block !important;
-                margin-bottom: 15px !important; 
+
+            /* === COLUMN OVERRIDES ===
+               Only stack LARGE columns (md-6+) to single-column.
+               Leave small columns (col-md-3, col-sm-4, col-xs-6) as 2-across 
+               so card grids render properly instead of collapsing. */
+            .col-md-12, .col-lg-12 {
+                width: 100% !important; flex: 0 0 100% !important; max-width: 100% !important;
             }
-            
-            /* Keep explicit utility grids intact (e.g. 50/50 splits) */
+            .col-md-8, .col-md-9, .col-md-10, .col-md-11,
+            .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11 {
+                width: 100% !important; flex: 0 0 100% !important; max-width: 100% !important;
+            }
+            .col-md-6, .col-lg-6 {
+                width: 50% !important; flex: 0 0 50% !important; max-width: 50% !important;
+            }
+            .col-md-4, .col-lg-4 {
+                width: 50% !important; flex: 0 0 50% !important; max-width: 50% !important;
+            }
+            .col-md-3, .col-lg-3 {
+                width: 50% !important; flex: 0 0 50% !important; max-width: 50% !important;
+            }
+            .col-md-2, .col-lg-2 {
+                width: 50% !important; flex: 0 0 50% !important; max-width: 50% !important;
+            }
+            /* xs/sm columns keep their native widths */
             .col-xs-6, .col-sm-6 { flex: 0 0 50% !important; max-width: 50% !important; }
             .col-xs-4, .col-sm-4 { flex: 0 0 33.333% !important; max-width: 33.333% !important; }
             .col-xs-3, .col-sm-3 { flex: 0 0 25% !important; max-width: 25% !important; }
-            
-            /* Pack grids and individual Cards */
-            .pack-container, .player-card, .card { 
-                margin-bottom: 15px !important; 
-                box-sizing: border-box;
+
+            /* All columns need padding fix */
+            [class*="col-"] {
+                padding-left: 5px !important; 
+                padding-right: 5px !important; 
+                box-sizing: border-box !important;
             }
-            
-            /* Fluid Img */
-            img { 
+
+            /* === NAVBAR LOGO FIX ===
+               The logonav.png was expanding to fill the entire container.
+               Cap it explicitly. */
+            img[src*="logonav"] {
+                max-width: 50px !important;
+                width: 50px !important;
+                height: auto !important;
+                padding: 0 5px !important;
+            }
+            /* General navbar image sizing */
+            .navbar-brand img, .navbar-header img {
+                max-width: 50px !important;
+                height: auto !important;
+            }
+
+            /* === CARD GRID FIX ===
+               Player cards need to show in a 2-column grid, not get stacked.
+               The previous V1 rule [class*="col-"] { width:100% } was killing them. */
+            .playercard, .player-card, .card-container, .card-item,
+            .fut-card, .ut-card {
+                display: inline-block !important;
+                vertical-align: top !important;
+                box-sizing: border-box !important;
+                margin-bottom: 10px !important;
+            }
+
+            /* Images: cap normal images but NOT card background images */
+            img:not([src*="cards/"]):not([src*="headshot"]):not([src*="head_"]):not([src*="flag"]):not([src*="club"]):not([src*="nation"]) { 
                 max-width: 100% !important; 
-                height: auto; 
+                height: auto !important; 
             }
             
-            /* Modals (Inspect, Login) */
+            /* Modals */
             .modal-dialog {
                 margin: 10px auto !important;
                 width: 95% !important;
             }
             
-            /* Fix massive Navbar Logo */
-            img[src*="logonav.png"], .navbar-brand img, .navbar-header img {
-                max-width: 55px !important;
-                height: auto !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-            
-            /* Forms and inputs */
+            /* Forms and inputs - 16px prevents iOS auto-zoom */
             input, select, textarea {
                 max-width: 100% !important;
-                font-size: 16px !important; /* Prevents frustrating iOS Safari auto-zoom */
-            }
-            
-            /* Pack Opening Area Fix */
-            .pack-opening-area {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100% !important;
-                overflow-x: hidden !important;
+                font-size: 16px !important;
             }
             
             /* Dynamic Header/Title scaling */
             h1, h2, h3 {
-                font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+                font-size: clamp(1.2rem, 4.5vw, 2rem) !important;
                 word-wrap: break-word;
                 text-align: center;
+            }
+            h4, h5, h6 {
+                font-size: clamp(0.9rem, 3.5vw, 1.4rem) !important;
+            }
+
+            /* Reduce overall padding and margins on mobile */
+            .panel, .well, .jumbotron {
+                padding: 12px !important;
+                margin-bottom: 10px !important;
             }
         }
     `;
 
     document.head.appendChild(style);
-    console.log('[FCW Mobile] Global responsiveness CSS injected.');
+    console.log('[FCW Mobile] Global responsiveness CSS V2 injected.');
 })();
 
 

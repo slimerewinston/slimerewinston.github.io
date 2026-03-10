@@ -3,107 +3,130 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Install FCW Mobile v6</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>FCWatch Overhaul - Mobile Installation</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 40px 20px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #0f1423;
-            color: #fff;
-            text-align: center;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        h1 {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            background: #0a0e1a;
             color: #fff;
-            text-shadow: 0 2px 10px rgba(255, 100, 200, 0.5);
+            min-height: 100vh;
+            padding: 40px 20px 60px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
             font-size: 28px;
             font-weight: 800;
             letter-spacing: -0.5px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #FF2079, #ff6eb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 25px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+        .header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
         }
 
-        .version {
-            background: rgba(255, 32, 121, 0.2);
-            border: 1px solid rgba(255, 32, 121, 0.5);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
+        .version-badge {
+            display: inline-block;
+            background: rgba(255, 32, 121, 0.15);
+            border: 1px solid rgba(255, 32, 121, 0.4);
             color: #ff2079;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .bookmarklet-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #FF2079, #8d124d);
-            color: white !important;
-            text-decoration: none !important;
-            padding: 16px 32px;
-            font-size: 18px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 700;
-            border-radius: 30px;
-            margin-top: 25px;
-            box-shadow: 0 8px 20px rgba(255, 32, 121, 0.4);
-            transition: transform 0.2s;
-            outline: none;
-            -webkit-touch-callout: default;
+            margin-bottom: 12px;
         }
 
-        .bookmarklet-link:hover {
-            transform: scale(1.05);
-        }
-
-        .bookmarklet-link:active {
-            transform: scale(0.97);
-        }
-
-        .steps {
-            text-align: left;
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 25px 20px;
+        /* === INSTALLATION LINKS (PaleTools Style) === */
+        .install-section {
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            border-radius: 20px;
+            padding: 28px 22px;
+            margin-bottom: 24px;
         }
 
-        .steps h2 {
-            font-size: 18px;
-            color: #FF2079;
-            margin-top: 0;
+        .install-section h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .steps ol {
-            padding-left: 20px;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 0;
+        .bookmarklet-link {
+            display: block;
+            text-align: center;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #FF2079, #8d124d);
+            color: #fff !important;
+            text-decoration: none !important;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 25px rgba(255, 32, 121, 0.35);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s, box-shadow 0.15s;
+            cursor: grab;
+            margin-bottom: 14px;
         }
 
-        .steps li {
+        .bookmarklet-link:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 15px rgba(255, 32, 121, 0.25);
+        }
+
+        .drag-hint {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.5;
+        }
+
+        /* === INSTRUCTIONS === */
+        .instructions {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 28px 22px;
+            margin-bottom: 24px;
+        }
+
+        .instructions h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .instructions li {
             margin-bottom: 14px;
             font-size: 14px;
             line-height: 1.5;
         }
 
-        .steps li:last-child {
+        .instructions li:last-child {
             margin-bottom: 0;
         }
 
@@ -111,49 +134,131 @@
             color: #fff;
         }
 
-        .note {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 12px;
-            margin-top: 15px;
-            font-style: italic;
+        .highlight {
+            color: #ff2079;
+            font-weight: 600;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.5);
+            transition: background 0.2s, color 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tab.active {
+            background: rgba(255, 32, 121, 0.2);
+            color: #ff2079;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 11px;
         }
     </style>
 </head>
 
 <body>
-    <h1>FCWatch Overhaul</h1>
-    <div class="version">Mobile v6</div>
-    <p>Drag the button below to your Bookmarks / Favorites to install. Tap it on any FC Watch page to activate the
-        overhaul.</p>
 
-    <a class="bookmarklet-link"
-        href="javascript:(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s);})();">FCWatch
-        Mobile v6</a>
-
-    <div class="steps">
-        <h2>📱 iOS Installation</h2>
-        <ol>
-            <li><strong>Long press</strong> the "FCWatch Mobile v6" button above with one finger and keep holding it.
-            </li>
-            <li>While still holding, use <strong>another finger</strong> to tap the <strong>Bookmarks icon</strong> (📖)
-                at the bottom of Safari.</li>
-            <li>Drag the link into your <strong>Favorites</strong> folder and release.</li>
-            <li>Go to any <strong>FC Watch</strong> page, tap the Bookmarks icon, and tap <strong>"FCWatch Mobile
-                    v6"</strong> to activate!</li>
-        </ol>
+    <div class="header">
+        <div class="version-badge">v6 — Ultimate iOS Edition</div>
+        <h1>FCWatch Overhaul</h1>
+        <p>Mobile Plugin for Safari</p>
     </div>
 
-    <div class="steps" style="margin-top: 20px;">
-        <h2>💻 Desktop Installation</h2>
-        <ol>
-            <li>Show your <strong>Bookmarks Bar</strong> (Ctrl+Shift+B / Cmd+Shift+B).</li>
-            <li><strong>Drag</strong> the "FCWatch Mobile v6" button above into your Bookmarks Bar.</li>
-            <li>Visit any FC Watch page and click the bookmark to activate!</li>
-        </ol>
+    <!-- === INSTALLATION LINK === -->
+    <div class="install-section">
+        <h2>📦 Installation Link</h2>
+
+        <!-- This is the PaleTools-style draggable bookmarklet link -->
+        <a class="bookmarklet-link"
+            href="javascript:void(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s)})()">
+            ⚡ FCWatch Mobile
+        </a>
+
+        <p class="drag-hint">
+            <strong>Desktop:</strong> Drag the button above to your bookmarks bar.<br>
+            <strong>iOS:</strong> See instructions below.
+        </p>
     </div>
 
-    <p class="note">The bookmarklet needs to be activated each time you visit FC Watch. The persist module will keep it
-        alive as you navigate between pages.</p>
+    <!-- === INSTRUCTIONS TABS === -->
+    <div class="instructions">
+        <div class="tab-bar">
+            <div class="tab active" onclick="switchTab('ios')">📱 iPhone / iPad</div>
+            <div class="tab" onclick="switchTab('desktop')">💻 Desktop</div>
+        </div>
+
+        <div id="tab-ios" class="tab-content active">
+            <ol>
+                <li>Tap the <strong>Share</strong> button <span class="highlight">(□↑)</span> at the bottom of Safari.
+                </li>
+                <li>Tap <strong>"Add Bookmark"</strong> and save it with the name <strong>"FCW Mobile"</strong>.</li>
+                <li><strong>Long-press</strong> the pink <span class="highlight">⚡ FCWatch Mobile</span> button above,
+                    then tap <strong>"Copy Link"</strong>.</li>
+                <li>Open your <strong>Bookmarks</strong> <span class="highlight">(📖)</span>, tap <strong>Edit</strong>.
+                </li>
+                <li>Tap the <strong>"FCW Mobile"</strong> bookmark you just created.</li>
+                <li>Tap the <strong>URL field</strong>, clear it, and <strong>Paste</strong> the copied link. Tap
+                    <strong>Done</strong>.</li>
+                <li>Visit <strong>fc-watch.com</strong>, open Bookmarks, and tap <strong>"FCW Mobile"</strong> to
+                    activate! ✨</li>
+            </ol>
+        </div>
+
+        <div id="tab-desktop" class="tab-content">
+            <ol>
+                <li>Make sure your <strong>Bookmarks Bar</strong> is visible <span
+                        class="highlight">(Ctrl+Shift+B)</span>.</li>
+                <li><strong>Drag</strong> the pink <span class="highlight">⚡ FCWatch Mobile</span> button above directly
+                    onto your bookmarks bar.</li>
+                <li>Visit <strong>fc-watch.com</strong> and click the bookmark to activate! ✨</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="footer">
+        FCWatch Overhaul © 2026 · Built for FC-Watch.com
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            if (tab === 'ios') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('tab-ios').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('tab-desktop').classList.add('active');
+            }
+        }
+    </script>
+
 </body>
 
 </html>
