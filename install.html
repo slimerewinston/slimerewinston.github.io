@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Install FCW Mobile v6</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f1423;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(255, 100, 200, 0.5);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .version {
+            background: rgba(255, 32, 121, 0.2);
+            border: 1px solid rgba(255, 32, 121, 0.5);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #ff2079;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .code-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: monospace;
+            font-size: 11px;
+            word-break: break-all;
+            text-align: left;
+            color: #a4b4cb;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+            user-select: all;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF2079, #8d124d);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 8px 20px rgba(255, 32, 121, 0.4);
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .steps {
+            text-align: left;
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .steps h2 {
+            font-size: 18px;
+            color: #FF2079;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .steps ol {
+            padding-left: 20px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 0;
+        }
+
+        .steps li {
+            margin-bottom: 14px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .steps li:last-child {
+            margin-bottom: 0;
+        }
+
+        strong {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>FCWatch Overhaul</h1>
+    <div class="version">Ultimate iOS Edition</div>
+    <p>Install the mobile plugin via Safari Bookmarklet. This new V2 engine injects the latest updates directly from
+        GitHub Pages and persists automatically across site navigations.</p>
+
+    <div class="code-box" id="payload">javascript:(function(){var
+        s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s);})();
+    </div>
+
+    <button class="btn" onclick="copyCode()">Copy Code</button>
+
+    <div class="steps">
+        <h2>🛠 How to Install on iPhone</h2>
+        <ol>
+            <li>Tap the <strong>Share</strong> button (square with arrow) at the bottom of Safari and select <strong>Add
+                    Bookmark</strong>. Name it "FCW Mobile" and tap Save.</li>
+            <li>Tap the <strong>Copy Code</strong> button above.</li>
+            <li>Tap the <strong>Bookmarks</strong> button (the book icon) at the bottom of Safari.</li>
+            <li>Tap <strong>Edit</strong> at the bottom right.</li>
+            <li>Tap the "FCW Mobile" bookmark you just made.</li>
+            <li>Tap the URL field, clear it, and <strong>Paste</strong> the code you copied. Tap Done.</li>
+            <li>Visit any FC Watch page, tap your Bookmarks icon, and tap "FCW Mobile" to launch the overhaul!</li>
+        </ol>
+    </div>
+
+    <script>
+        function copyCode() {
+            var val = document.getElementById('payload').innerText;
+            var el = document.createElement('textarea');
+            el.value = val;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            document.querySelector('.btn').innerText = 'Copied! ✅';
+            setTimeout(() => { document.querySelector('.btn').innerText = 'Copy Code'; }, 3000);
+        }
+    </script>
+</body>
+
+</html>
