@@ -43,15 +43,7 @@
             margin-bottom: 20px;
         }
 
-        .bookmarklet-container {
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            border: 1px dashed rgba(255, 32, 121, 0.3);
-        }
-
-        .btn-bookmark {
+        .btn {
             display: inline-block;
             background: linear-gradient(135deg, #FF2079, #8d124d);
             color: white;
@@ -61,26 +53,14 @@
             font-weight: 700;
             border-radius: 30px;
             cursor: move;
+            margin-top: 25px;
             box-shadow: 0 8px 20px rgba(255, 32, 121, 0.4);
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
+            transition: transform 0.2s;
+            outline: none;
         }
 
-        .btn-bookmark:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 32, 121, 0.6);
-        }
-
-        .btn-bookmark:active {
-            transform: scale(0.95);
-        }
-
-        .drag-hint {
-            margin-top: 15px;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 500;
+        .btn:hover {
+            transform: scale(1.05);
         }
 
         .steps {
@@ -90,6 +70,9 @@
             border-radius: 16px;
             padding: 25px 20px;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .steps h2 {
@@ -120,48 +103,26 @@
         strong {
             color: #fff;
         }
-
-        @media (max-width: 600px) {
-            .btn-bookmark {
-                cursor: pointer;
-            }
-        }
     </style>
 </head>
 
 <body>
     <h1>FCWatch Overhaul</h1>
-    <div class="version">Ultimate iOS Edition v2</div>
-    <p>Modernized installation. Simply drag the button below to your bookmarks bar, or long-press and "Add to Favorites"
-        on iPhone.</p>
+    <div class="version">Ultimate iOS Edition</div>
+    <p>Install the mobile plugin via Safari Bookmarklet. This new V2 engine injects the latest updates directly from
+        GitHub Pages and persists automatically across site navigations.</p>
 
-    <div class="bookmarklet-container">
-        <a class="btn-bookmark"
-            href="javascript:(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s);})();">FCW
-            Mobile</a>
-        <div class="drag-hint">↑ Drag this button to your Bookmarks Bar ↑</div>
-    </div>
+    <a href="javascript:(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s);})();"
+        class="btn" title="Drag to Bookmarks Bar">FCWatch (Drag Me!)</a>
 
     <div class="steps">
-        <h2>📱 iPhone Installation</h2>
+        <h2>🛠 How to Install</h2>
         <ol>
-            <li><strong>Long-press</strong> the "FCW Mobile" pink button above.</li>
-            <li>Select <strong>Copy</strong> from the menu.</li>
-            <li>Tap the <strong>Share</strong> button at the bottom of Safari and choose <strong>Add Bookmark</strong>.
-            </li>
-            <li>Tap the X to clear the URL and <strong>Paste</strong> the code you just copied.</li>
-            <li>Name it "FCW Mobile" and tap <strong>Save</strong>.</li>
-            <li>Visit FC Watch, open your Bookmarks, and tap "FCW Mobile" to launch!</li>
-        </ol>
-
-        <h2 style="margin-top:25px;">💻 Desktop Installation</h2>
-        <ol>
-            <li>Ensure your <strong>Bookmarks Bar</strong> is visible (Ctrl+Shift+B).</li>
-            <li><strong>Drag and drop</strong> the pink "FCW Mobile" button directly onto your bar.</li>
-            <li>Click it while on FC Watch to instantly enable the overhaul.</li>
+            <li>Make sure your browser's <strong>Bookmarks Bar</strong> is visible (Ctrl+Shift+B / Cmd+Shift+B).</li>
+            <li><strong>Click and drag</strong> the "FCWatch (Drag Me!)" button above into your Bookmarks Bar.</li>
+            <li>Visit any FC Watch page, click the new bookmark, and launch the overhaul!</li>
         </ol>
     </div>
-
 </body>
 
 </html>
