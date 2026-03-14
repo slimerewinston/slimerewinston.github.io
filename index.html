@@ -1,264 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>FCWatch Overhaul - Mobile Installation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCWatch Overhaul - iOS Bookmarklet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #050505;
+            --card: #0f0f12;
+            --accent: #0071e3;
+            --text: #f5f5f7;
+            --text-dim: #86868b;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-            background: #0a0e1a;
-            color: #fff;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
-            padding: 40px 20px 60px;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% -20%, #1a1a2e 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #0d0d1a 0%, transparent 40%);
         }
 
-        .header {
+        .container {
+            max-width: 800px;
+            width: 100%;
             text-align: center;
-            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        .header h1 {
-            font-size: 28px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
-            background: linear-gradient(135deg, #FF2079, #ff6eb4);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #a1a1a6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.04em;
         }
 
-        .header p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-        }
-
-        .version-badge {
-            display: inline-block;
-            background: rgba(255, 32, 121, 0.15);
-            border: 1px solid rgba(255, 32, 121, 0.4);
-            color: #ff2079;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        /* === INSTALLATION LINKS (PaleTools Style) === */
-        .install-section {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 28px 22px;
-            margin-bottom: 24px;
-        }
-
-        .install-section h2 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bookmarklet-link {
-            display: block;
-            text-align: center;
-            padding: 18px 24px;
-            background: linear-gradient(135deg, #FF2079, #8d124d);
-            color: #fff !important;
-            text-decoration: none !important;
-            border-radius: 16px;
-            font-size: 17px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            box-shadow: 0 8px 25px rgba(255, 32, 121, 0.35);
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.15s, box-shadow 0.15s;
-            cursor: grab;
-            margin-bottom: 14px;
-        }
-
-        .bookmarklet-link:active {
-            transform: scale(0.97);
-            box-shadow: 0 4px 15px rgba(255, 32, 121, 0.25);
-        }
-
-        .drag-hint {
-            text-align: center;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
+        .description {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            margin-bottom: 50px;
             line-height: 1.5;
+            max-width: 600px;
+            margin-inline: auto;
         }
 
-        /* === INSTRUCTIONS === */
-        .instructions {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 28px 22px;
-            margin-bottom: 24px;
-        }
-
-        .instructions h2 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .instructions ol {
-            padding-left: 20px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .instructions li {
-            margin-bottom: 14px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .instructions li:last-child {
-            margin-bottom: 0;
-        }
-
-        strong {
-            color: #fff;
-        }
-
-        .highlight {
-            color: #ff2079;
-            font-weight: 600;
-        }
-
-        .tab-bar {
-            display: flex;
-            gap: 0;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px);
+            margin-bottom: 40px;
+            position: relative;
             overflow: hidden;
         }
 
-        .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            font-size: 13px;
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .bookmark-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 18px 36px;
+            border-radius: 999px;
             font-weight: 600;
+            font-size: 1.15rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.3);
+            cursor: grab;
+            user-select: none;
+        }
+
+        .bookmark-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 113, 227, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .bookmark-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .instructions {
+            text-align: left;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        ol {
+            list-style: none;
+            counter-reset: steps;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+            color: var(--text-dim);
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        li::before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: -2px;
+            width: 32px;
+            height: 32px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .code-block {
+            background: #000;
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.85rem;
+            color: #d1d1d6;
+            text-align: left;
+            overflow-x: auto;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+        }
+
+        .copy-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.5);
-            transition: background 0.2s, color 0.2s;
-            -webkit-tap-highlight-color: transparent;
+            margin-top: 8px;
+            transition: all 0.2s;
         }
 
-        .tab.active {
-            background: rgba(255, 32, 121, 0.2);
-            color: #ff2079;
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.1);
         }
 
-        .tab-content {
+        footer {
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #424245;
+        }
+
+        .mobile-only {
             display: none;
         }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: rgba(255, 255, 255, 0.25);
-            font-size: 11px;
+        @media (max-width: 600px) {
+            .mobile-only {
+                display: block;
+                background: rgba(255, 153, 0, 0.1);
+                color: #ff9900;
+                padding: 12px;
+                border-radius: 12px;
+                margin-bottom: 30px;
+                font-size: 0.9rem;
+                border: 1px solid rgba(255, 153, 0, 0.2);
+            }
+            .card {
+                padding: 30px 20px;
+            }
+            .bookmark-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
-
 <body>
-
-    <div class="header">
-        <div class="version-badge">v6 — Ultimate iOS Edition</div>
+    <div class="container">
         <h1>FCWatch Overhaul</h1>
-        <p>Mobile Plugin for Safari</p>
-    </div>
+        <p class="description">Elevate your FCWatch experience on iOS with our premium, dark-mode overhaul. Glassmorphism, tailored accents, and modern layouts.</p>
+        
+        <div class="card">
+            <div class="mobile-only">
+                <strong>iPhone Users:</strong> You cannot drag bookmarklets. Please copy the code below and follow the steps in the guide.
+            </div>
 
-    <!-- === INSTALLATION LINK === -->
-    <div class="install-section">
-        <h2>📦 Installation Link</h2>
+            <a href="javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/dist/fcwatch_bookmarklet.js?v='+Date.now();s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your internet connection.');};document.body.appendChild(s);})();" class="bookmark-btn">FCWatch Overhaul</a>
+            
+            <p style="font-size: 0.9rem; color: var(--text-dim);">On PC, drag this button to your bookmarks bar. On iOS, follow the steps below.</p>
 
-        <!-- This is the PaleTools-style draggable bookmarklet link -->
-        <a class="bookmarklet-link"
-            href="javascript:void(function(){var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/bookmarklet/fcwatch-overhaul-mobile.js?v='+Date.now();document.head.appendChild(s)})()">
-            ⚡ FCWatch Mobile
-        </a>
-
-        <p class="drag-hint">
-            <strong>Desktop:</strong> Drag the button above to your bookmarks bar.<br>
-            <strong>iOS:</strong> See instructions below.
-        </p>
-    </div>
-
-    <!-- === INSTRUCTIONS TABS === -->
-    <div class="instructions">
-        <div class="tab-bar">
-            <div class="tab active" onclick="switchTab('ios')">📱 iPhone / iPad</div>
-            <div class="tab" onclick="switchTab('desktop')">💻 Desktop</div>
+            <div class="instructions">
+                <h2>How to Install on iOS</h2>
+                <ol>
+                    <li>
+                        <strong>Create a Bookmark:</strong> Bookmark *any* page in Safari (like this one).
+                    </li>
+                    <li>
+                        <strong>Copy the Code:</strong> Copy the code block below:
+                        <div class="code-block" id="loader-code">javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/dist/fcwatch_bookmarklet.js?v='+Date.now();s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your internet connection.');};document.body.appendChild(s);})();</div>
+                        <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+                    </li>
+                    <li>
+                        <strong>Edit the Bookmark:</strong> Open your Favorites/Bookmarks in Safari, tap **Edit**, and select the bookmark you just made.
+                    </li>
+                    <li>
+                        <strong>Paste the URL:</strong> Change the name to "FCWatch Overhaul" and paste the code into the **URL** field. Save it.
+                    </li>
+                    <li>
+                        <strong>Launch:</strong> Go to <strong>fc-watch.com</strong>, open your bookmarks, and tap **FCWatch Overhaul**.
+                    </li>
+                </ol>
+            </div>
         </div>
 
-        <div id="tab-ios" class="tab-content active">
-            <ol>
-                <li>Tap the <strong>Share</strong> button <span class="highlight">(□↑)</span> at the bottom of Safari.
-                </li>
-                <li>Tap <strong>"Add Bookmark"</strong> and save it with the name <strong>"FCW Mobile"</strong>.</li>
-                <li><strong>Long-press</strong> the pink <span class="highlight">⚡ FCWatch Mobile</span> button above,
-                    then tap <strong>"Copy Link"</strong>.</li>
-                <li>Open your <strong>Bookmarks</strong> <span class="highlight">(📖)</span>, tap <strong>Edit</strong>.
-                </li>
-                <li>Tap the <strong>"FCW Mobile"</strong> bookmark you just created.</li>
-                <li>Tap the <strong>URL field</strong>, clear it, and <strong>Paste</strong> the copied link. Tap
-                    <strong>Done</strong>.</li>
-                <li>Visit <strong>fc-watch.com</strong>, open Bookmarks, and tap <strong>"FCW Mobile"</strong> to
-                    activate! ✨</li>
-            </ol>
-        </div>
-
-        <div id="tab-desktop" class="tab-content">
-            <ol>
-                <li>Make sure your <strong>Bookmarks Bar</strong> is visible <span
-                        class="highlight">(Ctrl+Shift+B)</span>.</li>
-                <li><strong>Drag</strong> the pink <span class="highlight">⚡ FCWatch Mobile</span> button above directly
-                    onto your bookmarks bar.</li>
-                <li>Visit <strong>fc-watch.com</strong> and click the bookmark to activate! ✨</li>
-            </ol>
-        </div>
-    </div>
-
-    <div class="footer">
-        FCWatch Overhaul © 2026 · Built for FC-Watch.com
+        <footer>
+            Built with ❤️ for the FCWatch Community
+        </footer>
     </div>
 
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            if (tab === 'ios') {
-                document.querySelectorAll('.tab')[0].classList.add('active');
-                document.getElementById('tab-ios').classList.add('active');
-            } else {
-                document.querySelectorAll('.tab')[1].classList.add('active');
-                document.getElementById('tab-desktop').classList.add('active');
-            }
+        function copyCode() {
+            const code = document.getElementById('loader-code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.style.background = 'rgba(0, 255, 0, 0.1)';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
         }
     </script>
-
 </body>
-
 </html>
