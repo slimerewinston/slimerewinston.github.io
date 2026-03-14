@@ -254,52 +254,38 @@
             font-weight: 600;
         }
 
-        /* === Code Block === */
-        .code-block {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 16px;
+        /* === Drag Button === */
+        .drag-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.2rem;
+            padding: 18px 40px;
+            border-radius: 999px;
+            text-decoration: none;
+            cursor: grab;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            user-select: none;
+            -webkit-user-drag: element;
             margin: 16px 0;
-            position: relative;
-            overflow: hidden;
         }
 
-        .code-block pre {
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 0.75rem;
-            line-height: 1.5;
-            color: #c0c0d0;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-muted);
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 6px 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+        .drag-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(141, 18, 77, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(141, 18, 77, 0.5);
             color: #fff;
         }
 
-        .copy-btn.copied {
-            background: rgba(34, 197, 94, 0.2);
-            border-color: rgba(34, 197, 94, 0.3);
-            color: #4ade80;
+        .drag-btn:active {
+            cursor: grabbing;
+            transform: translateY(0);
         }
+
+        /* === Mobile Fallback Code Block === */
 
         /* === Features Grid === */
         .features {
@@ -387,54 +373,36 @@
         </div>
 
         <!-- Install Steps -->
-        <div class="glass-card">
-            <h2><span class="step-num">1</span> Copy the Bookmarklet Code</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">
-                Copy the code below — this is the tiny loader that fetches the full extension.
+        <div class="glass-card" style="text-align: center;">
+            <h2 style="justify-content: center;"><span class="step-num">1</span> Install the Bookmarklet</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+                <strong>Desktop / Laptop:</strong> Simply drag the button below into your Bookmarks Bar.
             </p>
-            <div class="code-block">
-                <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copy</button>
-                <pre id="bookmarkletCode">javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/dist/fcwatch_bookmarklet.js?v='+Date.now();s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your internet connection.');};document.body.appendChild(s);})();</pre>
+            
+            <a class="drag-btn" href="javascript:(function(){if(window.__FCW_BOOKMARKLET_LOADED){alert('FCWatch Overhaul is already active!');return;}var s=document.createElement('script');s.src='https://slimerewinston.github.io/FCWatch-Overhaul/dist/fcwatch_bookmarklet.js?v='+Date.now();s.onerror=function(){alert('Failed to load FCWatch Overhaul. Check your internet connection.');};document.body.appendChild(s);})();" title="FCWatch Overhaul">FCWatch Overhaul</a>
+            
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: left;">
+                <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: #fff;">📱 Mobile Users (iOS / iPadOS)</h3>
+                <ol class="steps-list">
+                    <li>Long-press the <strong>FCWatch Overhaul</strong> button above and select <strong>"Copy Link"</strong></li>
+                    <li>Bookmark this page and tap <strong>Edit</strong></li>
+                    <li>Change the Name to <strong>FCWatch Overhaul</strong></li>
+                    <li>Delete the URL and <strong>Paste</strong> the link you copied</li>
+                </ol>
             </div>
         </div>
 
         <div class="glass-card">
-            <h2><span class="step-num">2</span> Create the Bookmark</h2>
+            <h2><span class="step-num">2</span> Use It</h2>
             <ol class="steps-list">
-                <li>Open <strong>Safari</strong> on your iPhone or iPad</li>
-                <li>Visit any website and tap the <strong>Share</strong> button (⬆️ square with arrow)</li>
-                <li>Tap <strong>"Add Bookmark"</strong> and save it</li>
-                <li>Open your <strong>Bookmarks</strong> (📖 icon) and tap <strong>"Edit"</strong></li>
-                <li>Find the bookmark you just saved and tap it to edit</li>
-                <li>Change the <strong>Name</strong> to: <code>FCWatch Overhaul</code></li>
-                <li><strong>Delete</strong> the existing URL and <strong>paste</strong> the code you copied in Step 1</li>
-                <li>Tap <strong>"Done"</strong> to save</li>
-            </ol>
-        </div>
-
-        <div class="glass-card">
-            <h2><span class="step-num">3</span> Use It</h2>
-            <ol class="steps-list">
-                <li>Navigate to <strong>fc-watch.com</strong> in Safari</li>
+                <li>Navigate to <strong>fc-watch.com</strong></li>
                 <li>Wait for the page to fully load</li>
-                <li>Tap the <strong>Bookmarks</strong> icon (📖) and select <strong>FCWatch Overhaul</strong></li>
+                <li>Click or tap the <strong>FCWatch Overhaul</strong> bookmark you just created</li>
                 <li>The dark theme and all visual enhancements will apply instantly ✨</li>
             </ol>
             <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 16px; line-height: 1.5;">
                 <strong style="color: #e8a0c0;">Note:</strong> You'll need to tap the bookmarklet each time you visit fc-watch.com. Your settings (accent color, backgrounds, etc.) are saved automatically and persist between visits.
             </p>
-        </div>
-
-        <!-- Desktop Users -->
-        <div class="glass-card" style="text-align: center;">
-            <h2 style="justify-content: center;">🖥️ Desktop User?</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">
-                Install the full Chrome/Firefox extension for the best experience.
-            </p>
-            <a href="https://github.com/slimerewinston/FCWatch-Overhaul" class="install-btn" style="font-size: 0.9rem; padding: 12px 28px;">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                Get Extension
-            </a>
         </div>
 
         <!-- Footer -->
@@ -443,37 +411,5 @@
             <p style="margin-top: 6px;">v2.1-ios · <a href="https://github.com/slimerewinston/FCWatch-Overhaul">Source Code</a></p>
         </div>
     </div>
-
-    <script>
-        function copyCode() {
-            const code = document.getElementById('bookmarkletCode').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = 'Copy';
-                    btn.classList.remove('copied');
-                }, 2000);
-            }).catch(() => {
-                // Fallback for iOS Safari
-                const textarea = document.createElement('textarea');
-                textarea.value = code;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = 'Copy';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
-        }
-    </script>
 </body>
 </html>
